@@ -6,6 +6,7 @@ export default function Dashboard() {
   function logOut(e) {
     e.preventDefault()
     console.log("sudah logout")
+    alert('Logout success')
   }
   return (
     <div>

@@ -5,8 +5,16 @@ const initialState = {
 }
 
 function reducer(state = initialState, action) {
-    const { type, payload } = action
-    return state
+  switch (action.type) {
+    case 'loading/setLoading':
+      return { ...state, loading: action.payload}
+    case 'error/setError':
+      return { ...state, error: action.payload}
+    case 'auth_token/setAuthToken':
+      return { ...state, auth_token: action.payload}
+    default:
+      return state
+  }
 }
 
 export default reducer

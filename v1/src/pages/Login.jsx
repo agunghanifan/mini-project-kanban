@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { mailSvg, passwordSvg } from '../assets/'
 import './css/Login.css'
 
@@ -19,6 +20,7 @@ export default function Login() {
   function login (e) {
     e.preventDefault()
     console.log(loginInput)
+    alert('login success')
     setLoginInput({
       email: '',
       password: ''
@@ -35,6 +37,7 @@ export default function Login() {
           <input type="password" value={loginInput.password} onChange={onChange} name='password' placeholder='password...'></input>
           <button type='submit' onClick={e => login(e)}>Login</button>
         </form>
+        <Link to='/v1/register'>Don't have an account?</Link>
       </div>
     </div>
   )
