@@ -1,7 +1,7 @@
 const kanbanAPI = 'https://todos-project-api.herokuapp.com'
 
-export function setAuthToken (payload) {
-  return { type: 'auth_token/setAuthToken', payload}
+export function setIsLogin (payload) {
+  return { type: 'isLogin/setIsLogin', payload}
 }
 
 export function setLoading (payload) {
@@ -29,7 +29,6 @@ export function setRegister (payload) {
           dispatch(setError(data.message))
         } else {
           dispatch(setError(null))
-          alert('Success', data.message)
         } 
       })
       .catch(error => dispatch(setError(error)))
@@ -50,7 +49,23 @@ export function setLogin (payload) {
       .then(data => {
         dispatch(setLoading(false))
         console.log(data)
+        if (data.auth_token) {
+          dispatch(setError(null))
+          localStorage.setItem('auth_token', data.auth_token)
+          dispatch(setIsLogin(true))
+          console.log("masuk data localstorage")
+        } else {
+          dispatch(setIsLogin(false))
+          dispatch(setError(data.message))
+        }
       })
       .catch(error => dispatch(setError(error)))
+  }
+}
+
+export function setLogout () {
+  return (dispatch) => {
+    localStorage.removeItem('auth_token')
+    dispatch(setError(null))
   }
 }

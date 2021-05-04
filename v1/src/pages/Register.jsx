@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setRegister, setError } from '../store/actions/userAction'
 
 export default function Register() {
-  let error = useSelector(state => state.userReducer.error)
-  let [flag, setFlag] = useState(false)
+  let errorUser = useSelector(state => state.userReducer.error)
   const [registerInput, setRegisterInput] = useState({
     name: '',
     email: '',
@@ -24,25 +23,26 @@ export default function Register() {
   function register (e) {
     e.preventDefault()
     console.log(registerInput)
-    dispatch(setRegister(registerInput))
-    setFlag(true)
+    if (registerInput.password !== registerInput.password_confirmation) {
+      dispatch(setError('Password did not match'))
+    } else {
+      dispatch(setRegister(registerInput))
+      history.push('/')
+    }
   }
 
   useEffect(() => {
-    if (!error && flag) {
-      history.push('/')
-    }
-  }, [error])
+  }, [errorUser])
 
   return (
     <div>
       <h1>Ini Page Register</h1>
       {
-        error ? <h1>{JSON.stringify(error)}</h1> : null
+        errorUser ? <h1>{JSON.stringify(errorUser)}</h1> : null
       }
       <form onSubmit={e => register(e)}>
         <label>Name</label>
-        <input type="text" value={registerInput.name} onChange={onChange} name='name' placeholder='name...' required />
+        <input type="text" minLength={4} value={registerInput.name} onChange={onChange} name='name' placeholder='name...' required />
         <label>Email</label>
         <input type="email" value={registerInput.email} onChange={onChange} name='email' placeholder='email...' required />
         <label>Password</label>

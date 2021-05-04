@@ -1,5 +1,5 @@
 const initialState = {
-    auth_token: '',
+    isLogin: null,
     loading: false,
     error: null
 }
@@ -10,8 +10,8 @@ function reducer(state = initialState, action) {
       return { ...state, loading: action.payload}
     case 'error/setError':
       return { ...state, error: action.payload}
-    case 'auth_token/setAuthToken':
-      return { ...state, auth_token: action.payload}
+    case 'isLogin/setIsLogin':
+      return { ...state, isLogin: action.payload}
     default:
       return state
   }
