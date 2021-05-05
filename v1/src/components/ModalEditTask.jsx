@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { setAddList } from '../store/actions/taskAction'
+import { setEditList } from '../store/actions/taskAction'
 import './css/ModalNewTask.css'
 
-export default function ModalNewTask(props) {
+export default function ModalEditTask(props) {
 
-  const [newTask, setNewTask] = useState({
-    name: '',
-    progress_percentage: 0
+  const { data, todoId } = props
+
+  const [editTask, setEditTask] = useState({
+    id: data.id,
+    name: data.name,
+    progress_percentage: Number(data.progress_percentage)
   })
   const dispatch = useDispatch()
   
@@ -20,14 +23,14 @@ export default function ModalNewTask(props) {
     if (name === 'progress_percentage') {
       value = Number(value)
     }
-    const newInputTask = { ...newTask, [name]: value }
-    setNewTask(newInputTask)
+    const newInputTask = { ...editTask, [name]: value }
+    setEditTask(newInputTask)
   }
 
 
-  function addTask (e) {
+  function submitEditTask (e) {
     e.preventDefault()
-    dispatch(setAddList({ task: newTask, id: props.id }))
+    dispatch(setEditList({ task: editTask, id: todoId }))
     props.onClose()
   }
 
@@ -36,14 +39,14 @@ export default function ModalNewTask(props) {
       <div className="modal" onClick={props.onClose}>
         <div className="modal-content" onClick={e => e.stopPropagation()}  >
           <div className="modal-header">
-            <h4 className="modal-title">Create Task</h4>
+            <h4 className="modal-title">Edit Task</h4>
           </div>
           <div className="modal-body">
-            <form className="form" onSubmit={e => addTask(e)}>
+            <form className="form" onSubmit={e => submitEditTask(e)}>
               <label className="form-label">Task Name</label>
-              <input type="text" value={newTask.name} onChange={onChange} name="name" className="form-control" placeholder="example: Build rocket to Mars."></input>
+              <input type="text" value={editTask.name} onChange={onChange} name="name" className="form-control" placeholder="example: Build rocket to Mars."></input>
               <label className="form-label">Progress</label>
-              <input type="number" value={newTask.progress_percentage} onChange={onChange} name="progress_percentage" className="form-control" max={100} placeholder="0%" style={{width: "100px"}}></input>
+              <input type="number" value={editTask.progress_percentage} onChange={onChange} name="progress_percentage" className="form-control" max={100} placeholder="0%" style={{width: "100px"}}></input>
           <div className="modal-footer">
             <button onClick={props.onClose} className="btn btn-light">Cancel</button>
             <button className="btn btn-success">Save Task</button>

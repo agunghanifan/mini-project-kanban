@@ -4,7 +4,7 @@ import { CardLists, ModalNewTask } from '../components/'
 import { plus } from '../assets/'
 
 export default function CardTodos(props) {
-  const { todo } = props
+  const { todo, id } = props
   const [items, setItems] = useState([])
   const [show, setShow] = useState(false)
   const error = useSelector(state => state.taskReducer.error)
@@ -56,7 +56,7 @@ export default function CardTodos(props) {
                 </div>
               </div> :
             items.map(item => {
-              return <CardLists item={item} key={item.id} />
+              return <CardLists listOfTodo={id} todoId={todo.id} item={item} key={item.id} />
             })
           }
           <div onClick={() => setShow(true)} className="mt-3">

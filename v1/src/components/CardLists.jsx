@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { moveToAnotherTodo, setDeleteList } from '../store/actions/taskAction'
+import ModalEditTask from './ModalEditTask'
 import { threeDotsSvg, checklistSvg } from '../assets/'
-import './css/CardLists.css'
 import { arrowLeftSvg, arrowRightSvg, editSvg, deleteSvg } from '../assets/'
+import './css/CardLists.css'
 
 export default function CardLists(props) {
 
-  const { item } = props
+  const { item, listOfTodo, todoId } = props
+  const [show, setShow] = useState(false)
+  const dispatch = useDispatch()
 
   if (item.length === 0) {
     return (
@@ -15,6 +20,35 @@ export default function CardLists(props) {
         </div>
       </div>
     )
+  }
+
+  function filter (operator) {
+    let filterId
+    if (operator === 'smaller') {
+      filterId = listOfTodo.filter(todo => todo.id < todoId)
+      return filterId[filterId.length - 1]
+    } else {
+      filterId = listOfTodo.filter(todo => todo.id > todoId)
+      return filterId[0]
+    }
+  }
+
+  function moveLeftTodo (e, item) {
+    e.preventDefault()
+    const nextTodo = filter('smaller')
+    dispatch(moveToAnotherTodo({ idTodo: nextTodo.id, item }))
+  }
+
+  function moveRightTodo (e, item) {
+    e.preventDefault()
+    const nextTodo = filter()
+    // console.log(nextTodo, todoId, "ini dari moveright")
+    dispatch(moveToAnotherTodo({ idTodo: nextTodo.id, item }))
+  }
+
+  function deleteList (e, itemId) {
+    e.preventDefault()
+    dispatch(setDeleteList({todoId, itemId}))
   }
 
   return (
@@ -36,10 +70,17 @@ export default function CardLists(props) {
           <div className="dropdown">
             <img className="dropbtn" src={threeDotsSvg} alt="threeDots" />
             <div className="dropdown-content">
-              <a><img src={arrowLeftSvg} alt="arrowLeft" />  Move Left</a>
-              <a><img src={arrowRightSvg} alt="arrowRight" />  Move Right</a>
-              <a><img src={editSvg} alt="edit" />  Edit</a>
-              <a><img src={deleteSvg} alt="delete" />  Delete</a>
+              {
+                filter('smaller') === undefined ? null :
+                <a onClick={e => moveLeftTodo(e, item)}><img src={arrowLeftSvg} alt="arrowLeft" />  Move Left</a>
+              }
+              {
+                filter() === undefined ? null :
+                <a onClick={e => moveRightTodo(e, item)}><img src={arrowRightSvg} alt="arrowRight" />  Move Right</a>
+              }
+              <a onClick={() => setShow(true)}><img src={editSvg} alt="edit" />  Edit</a>
+              <ModalEditTask onClose={() => setShow(false)} todoId={todoId} show={show} data={{id: item.id ,name: item.name, progress_percentage: item.progress_percentage}} />
+              <a onClick={e => deleteList(e, item.id)}><img src={deleteSvg} alt="delete" />  Delete</a>
             </div>
           </div>
         </div>

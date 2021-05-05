@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLogout, setIsLogin } from '../store/actions/userAction'
 import { fetchListTodos } from '../store/actions/taskAction'
@@ -12,8 +12,9 @@ export default function Dashboard() {
   const listTodos = useSelector(state => state.taskReducer.listTodos)
   const loading = useSelector(state => state.taskReducer.loading)
   const error = useSelector(state => state.taskReducer.error)
-  const dispatch = useDispatch()
   const history = useHistory()
+  const dispatch = useDispatch()
+  const [listIdTodos, setListIdTodos] = useState([])
 
   function logOut(e) {
     e.preventDefault()
@@ -47,7 +48,7 @@ export default function Dashboard() {
                   loading ? <h1>Please wait...</h1> :
                   error ? <h1>Heres some error we founded {JSON.stringify(error)}</h1> :
                   listTodos.map(todo => {
-                    return <CardTodos todo={todo} key={todo.id} />
+                    return <CardTodos id={listTodos} todo={todo} key={todo.id} />
                   })
                 }
               </div>
