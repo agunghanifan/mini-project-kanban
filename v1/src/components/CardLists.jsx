@@ -75,15 +75,15 @@ export default function CardLists(props) {
             <div className="dropdown-content">
               {
                 filter('smaller') === undefined ? null :
-                <a onClick={e => moveLeftTodo(e, item)}><img src={arrowLeftSvg} alt="arrowLeft" />  Move Left</a>
+                <a href="# " onClick={e => moveLeftTodo(e, item)}><img src={arrowLeftSvg} alt="arrowLeft" />  Move Left</a>
               }
               {
                 filter() === undefined ? null :
-                <a onClick={e => moveRightTodo(e, item)}><img src={arrowRightSvg} alt="arrowRight" />  Move Right</a>
+                <a href="# " onClick={e => moveRightTodo(e, item)}><img src={arrowRightSvg} alt="arrowRight" />  Move Right</a>
               }
-              <a onClick={() => setShow(true)}><img src={editSvg} alt="edit" />  Edit</a>
+              <a href="# " onClick={() => setShow(true)}><img src={editSvg} alt="edit" />  Edit</a>
               <ModalEditTask onClose={() => setShow(false)} todoId={todoId} show={show} data={{id: item.id ,name: item.name, progress_percentage: item.progress_percentage}} />
-              <a onClick={e => deleteList(e, item.id)}><img src={deleteSvg} alt="delete" />  Delete</a>
+              <a href="# " onClick={e => deleteList(e, item.id)}><img src={deleteSvg} alt="delete" />  Delete</a>
             </div>
           </div>
         </div>
