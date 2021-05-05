@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { moveToAnotherTodo, setDeleteList } from '../store/actions/taskAction'
 import ModalEditTask from './ModalEditTask'
 import { threeDotsSvg, checklistSvg } from '../assets/'
@@ -56,9 +56,12 @@ export default function CardLists(props) {
       <div style={{fontSize: "14px"}} className="mx-2">
         {item.name}
       </div>
-      <div className="row">
-        <div className="col-5">
-          <progress style={{width: "60px"}} value={item.progress_percentage} max={100}/>
+      <div className="row mx-1">
+        <div className="col-4">
+          {
+            item.progress_percentage === 100 ? <progress style={{width: "60px"}} value={item.progress_percentage} max={100}/> :
+            <progress style={{width: "60px"}} value={item.progress_percentage} max={100}/>
+          }
         </div>
         <div style={{fontSize: "12px"}} className="col-4">
           {
@@ -66,7 +69,7 @@ export default function CardLists(props) {
             item.progress_percentage + ' %'
           }
         </div>
-        <div className="col-1">
+        <div className="col-4">
           <div className="dropdown">
             <img className="dropbtn" src={threeDotsSvg} alt="threeDots" />
             <div className="dropdown-content">

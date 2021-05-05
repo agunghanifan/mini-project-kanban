@@ -12,6 +12,7 @@ export default function CardTodos(props) {
   const herokuAPI = 'https://todos-project-api.herokuapp.com'
   let token = localStorage.getItem('auth_token') || null
   let bearer = 'BEARER ' + token
+  let colorfull = ['card border-danger bg-danger', 'card border-primary bg-primary', 'card border-info bg-info', 'card border-success bg-success']
 
   useEffect(() => {
     function fetchListItems (payload) {
@@ -38,7 +39,7 @@ export default function CardTodos(props) {
 
   return (
     <div className="col">
-      <div className="card">
+      <div className={colorfull[Math.round(Math.random()*3)]}>
         <div className="mx-3 my-2">
           <div style={{fontSize: "12px"}} className="card">
             {todo.title}

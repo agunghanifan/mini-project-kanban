@@ -5,7 +5,7 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import { Login, Register, Dashboard, NotFound } from './pages/'
+import { Dashboard, NotFound } from './pages/'
 
 function App() {
   return (
@@ -14,13 +14,7 @@ function App() {
         <Route exact path='/'>
           <Redirect to ='/v1' />
         </Route>
-        <Route exact path='/v1'>
-          <Login />
-        </Route>
-        <Route path='/v1/register'>
-          <Register />
-        </Route>
-        <Route path='/v1/dashboard'>
+        <Route path='/v1'>
           <Dashboard />
         </Route>
         <Route path='*'>

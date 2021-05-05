@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setEditList } from '../store/actions/taskAction'
 import './css/ModalNewTask.css'

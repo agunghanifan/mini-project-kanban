@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setLogout, setIsLogin } from '../store/actions/userAction'
+import { setLogin } from '../store/actions/userAction'
 import { fetchListTodos } from '../store/actions/taskAction'
 import { useHistory } from 'react-router-dom'
 import { CardTodos } from '../components/'
-import { logoutSvg, logoSvg } from '../assets/'
+import { logoSvg } from '../assets/'
 import './css/Dashboard.css'
 
 export default function Dashboard() {
@@ -14,14 +14,6 @@ export default function Dashboard() {
   const error = useSelector(state => state.taskReducer.error)
   const history = useHistory()
   const dispatch = useDispatch()
-  const [listIdTodos, setListIdTodos] = useState([])
-
-  function logOut(e) {
-    e.preventDefault()
-    console.log("sudah logout")
-    dispatch(setLogout())
-    dispatch(setIsLogin(false))
-  }
 
   useEffect(() => {
     if (!localStorage.getItem('auth_token')) {
@@ -30,14 +22,18 @@ export default function Dashboard() {
   }, [isLogin, history])
 
   useEffect(() => {
-    dispatch(fetchListTodos())
+    dispatch(setLogin({ email: 'tony@stark.com', password: 'password'}))
+    const timing = setInterval(() => {
+      dispatch(fetchListTodos())
+      clearInterval(timing)
+    }, 3000);
   }, [dispatch])
 
   return (
-    <div className="container-fluid full-height">
-      <div className="row align-items-stretch">
-        <div className="col-1 bg-dark">
-          <img className="m-3" src={logoSvg} alt="logo" />
+    <div className="container-fluid d-flex vh-100">
+      <div className="row d-flex align-items-stretch align-content-stretch flex-fill">
+        <div className="col-1 bg-dark align-self-stretch">
+          <img className="m-3 align-self-center" src={logoSvg} alt="logo" />
         </div>
         <div className="col">
           <div className="row m-2">
@@ -52,9 +48,6 @@ export default function Dashboard() {
                   })
                 }
               </div>
-            </div>
-            <div className="col-1">
-              <button className="btn btn-danger" onClick={e => logOut(e)}>Logout <img className="fs-6" src={logoutSvg} alt="logout" /></button>
             </div>
           </div>
         </div>
