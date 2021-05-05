@@ -1,0 +1,33 @@
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    width: 567px;
+    height: 302.5px;
+    background-color: #ffff;
+}
+
+.modal-header {
+    padding: 10px;
+}
+
+modal-title {
+    margin: 0;
+}
+
+.modal-body {
+    padding: 10px;
+}
+
+.form {
+    flex-direction: column;
+}

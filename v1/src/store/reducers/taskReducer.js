@@ -14,7 +14,7 @@ function reducer(state = initialState, action) {
     case 'listTodos/setListTodos':
       return { ...state, listTodos: action.payload}
     case 'listItems/setListItems':
-      return { ...state, listItems: action.payload}
+      return { ...state, listItems: [...state.listItems, action.payload]}
     default:
       return state
   }

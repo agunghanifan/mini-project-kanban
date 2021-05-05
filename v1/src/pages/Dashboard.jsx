@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setLogout, setIsLogin } from '../store/actions/userAction'
 import { fetchListTodos } from '../store/actions/taskAction'
 import { useHistory } from 'react-router-dom'
-import { logoutSvg } from '../assets/'
+import { CardTodos } from '../components/'
+import { logoutSvg, logoSvg } from '../assets/'
+import './css/Dashboard.css'
 
 export default function Dashboard() {
   const isLogin = useSelector(state => state.userReducer.isLogin)
@@ -31,15 +33,30 @@ export default function Dashboard() {
   }, [dispatch])
 
   return (
-    <div>
-      <h1>Hello ini dashboard</h1>
-      <div>
-        {
-          loading ? <h1>Please wait...</h1> :
-          error ? <h1>Heres some error we founded {JSON.stringify(error)}</h1> :
-          <p>{JSON.stringify(listTodos)}</p>
-        }
-        <button onClick={e => logOut(e)}>Logout <img src={logoutSvg} alt="logout" /></button>
+    <div className="container-fluid full-height">
+      <div className="row align-items-stretch">
+        <div className="col-1 bg-dark">
+          <img className="m-3" src={logoSvg} alt="logo" />
+        </div>
+        <div className="col">
+          <div className="row m-2">
+            <div className="col">
+              <h3 style={{fontSize: "20px"}}>Product Roadmap</h3>
+              <div className="row">
+                {
+                  loading ? <h1>Please wait...</h1> :
+                  error ? <h1>Heres some error we founded {JSON.stringify(error)}</h1> :
+                  listTodos.map(todo => {
+                    return <CardTodos todo={todo} key={todo.id} />
+                  })
+                }
+              </div>
+            </div>
+            <div className="col-1">
+              <button className="btn btn-danger" onClick={e => logOut(e)}>Logout <img className="fs-6" src={logoutSvg} alt="logout" /></button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
