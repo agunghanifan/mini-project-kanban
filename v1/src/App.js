@@ -11,11 +11,11 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path='/'>
-          <Redirect to ='/v1' />
-        </Route>
         <Route path='/v1'>
           <Dashboard />
+        </Route>
+        <Route exact path='/'>
+          <Redirect to ='/v1' />
         </Route>
         <Route path='*'>
           <NotFound />
